@@ -1,0 +1,34 @@
+-- Check for Duplicates
+
+SELECT film_id, title,
+count(*) FROM film
+GROUP BY film_id, title
+HAVING COUNT(*) > 1
+
+SELECT customer_id, email,
+count(*) FROM customer
+GROUP BY customer_id, email
+HAVING COUNT(*) > 1
+
+-- Search for Missing Data
+SELECT film_id, title
+FROM film
+WHERE title IS NULL
+
+SELECT customer_id, email
+FROM customer
+WHERE customer_id IS NULL
+
+-- Summarize the Data
+SELECT MIN(rental_rate) AS min_rental_rate,
+    MAX(rental_rate) AS max_rent_rate, 
+    AVG(rental_rate) AS avg_rent_rate, 
+    COUNT(*) AS count_films,
+    MIN(replacement_cost) AS min_replacement_cost, 
+    MAX(replacement_cost) AS max_replacement_cost, 
+    AVG(replacement_cost) AS avg_replacement_cost, 
+    MIN(length) AS min_length,
+    MAX(length) AS max_length,
+    AVG(length) AS avg_length,
+    mode() WITHIN GROUP (ORDER BY rating) AS modal_value
+FROM film;
