@@ -15,10 +15,46 @@ FROM film;
 
 ## Use Common Table Expressions to find AVG of Top 5 Customers
 WITH top_five_customers (customer_id, country, total_amount) AS
-(SELECT A.customer_id, D. country,
-SUM(E.amount) AS total_amount FROM customer A
-INNER JOIN address B ON A.address_id = B.address_id INNER JOIN city C ON B.city_id = C.city_id
-INNER JOIN country D ON C.city_id = D.country_id
-INNER JOIN payment E ON A.customer_id = E.customer_id GROUP BY A.customer_id, city, country
-ORDER BY total_amount DESC LIMIT 5)
-SELECT AVG(total_amount) FROM top_five_customers
+	(SELECT A.customer_id, D. country,
+	SUM(E.amount) AS total_amount 
+	FROM customer A
+	INNER JOIN address B ON A.address_id = B.address_id 
+	INNER JOIN city C ON B.city_id = C.city_id
+	INNER JOIN country D ON C.city_id = D.country_id
+	INNER JOIN payment E ON A.customer_id = E.customer_id 
+	GROUP BY A.customer_id, city, country
+	ORDER BY total_amount DESC LIMIT 5)
+SELECT AVG(total_amount) 
+FROM top_five_customers
+
+## Find Top Countries by Customer Count
+SELECT D.country, COUNT(customer_id)
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id 
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_ID = D.country_ID 
+GROUP BY country
+ORDER BY count DESC
+LIMIT 10
+
+## Find Top Customers in Specific Cities for Marketing Purposes
+SELECT A.customer_id, 
+	A. first_name, 
+	A. last_name, 
+	C. city,
+	D. country,
+	SUM(amount) AS "total_amount"
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id 
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_ID = D.country_ID 
+INNER JOIN payment E ON A.customer_id = E.customer_id 
+WHERE city = 'Cape Coral'
+ 	OR city = 'Santa Brbara dOeste' 
+	OR city = 'Memphis'
+	OR city = 'Tanza'
+	OR city = 'Valparai'
+	OR city = 'Santa Rosa' OR city = 'Aurora'
+	OR city = 'Tanauan' OR city = 'Halisahar' OR city = 'Bijapur'
+GROUP BY a.customer_id, city, country ORDER BY total_amount DESC
+LIMIT 5
