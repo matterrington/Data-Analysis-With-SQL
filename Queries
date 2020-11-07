@@ -1,19 +1,4 @@
-### Create new....
-SELECT MIN(rental_rate) AS min_rental_rate,		
-       MAX(rental_rate) AS max_rent_rate,		
-       AVG(rental_rate) AS avg_rent_rate,		
-       COUNT(*) AS count_films,		
-	   MIN(replacement_cost) AS min_replacement_cost,	
-	   MAX(replacement_cost) AS max_replacement_cost,	
-	   AVG(replacement_cost) AS avg_replacement_cost,	
-	   MIN(length) AS min_length,	
-	   MAX(length) AS max_length,	
-	   AVG(length) AS avg_length,	
-	   mode() WITHIN GROUP (ORDER BY rating) 	
-	   	AS modal_value
-FROM film;		
-
-## Use Common Table Expressions to find AVG of Top 5 Customers
+-- Use Common Table Expressions to find AVG of Top 5 Customers
 WITH top_five_customers (customer_id, country, total_amount) AS
 	(SELECT A.customer_id, D. country,
 	SUM(E.amount) AS total_amount 
@@ -27,7 +12,7 @@ WITH top_five_customers (customer_id, country, total_amount) AS
 SELECT AVG(total_amount) 
 FROM top_five_customers
 
-## Find Top Countries by Customer Count
+-- Find Top Countries by Customer Count
 SELECT D.country, COUNT(customer_id)
 FROM customer A
 INNER JOIN address B ON A.address_id = B.address_id 
@@ -37,7 +22,7 @@ GROUP BY country
 ORDER BY count DESC
 LIMIT 10
 
-## Find Top Customers in Specific Cities for Marketing Purposes
+-- Find Top Customers in Specific Cities for Marketing Purposes
 SELECT A.customer_id, 
 	A. first_name, 
 	A. last_name, 
