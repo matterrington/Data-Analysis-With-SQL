@@ -13,7 +13,7 @@ SELECT MIN(rental_rate) AS min_rental_rate,
 	   	AS modal_value
 FROM film;		
 
-## Use Common Table Expressions to find AVG of Top 5 Customers
+**## Use Common Table Expressions to find AVG of Top 5 Customers**
 WITH top_five_customers (customer_id, country, total_amount) AS
 (SELECT A.customer_id, D. country,
 SUM(E.amount) AS total_amount FROM customer A
